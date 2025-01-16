@@ -20,7 +20,9 @@ class Router {
             'api/user/courses' => ['GET', 'UserController', 'viewCourses'],
             'api/user/search' => ['GET', 'UserController', 'searchCourses'],
             'api/category/list' => ['GET', 'CategoryController', 'getCategories'],
-            'api/tag/get' => ['GET', 'TagController', 'getTags']
+            'api/tag/get' => ['GET', 'TagController', 'getTags'],
+            'api/student/details' => ['GET', 'StudentController', 'getStudentDetails'],
+            'api/student/enroll' => ['POST', 'StudentController', 'enrollCourse']
         ];
 
         if (isset($routes[$requestUri])) {
