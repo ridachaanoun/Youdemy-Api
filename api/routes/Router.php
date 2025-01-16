@@ -19,7 +19,8 @@ class Router {
             'api/user/logout' => ['POST', 'UserController', 'logout'],
             'api/user/courses' => ['GET', 'UserController', 'viewCourses'],
             'api/user/search' => ['GET', 'UserController', 'searchCourses'],
-            'api/category/list' => ['GET', 'CategoryController', 'getCategories']
+            'api/category/list' => ['GET', 'CategoryController', 'getCategories'],
+            'api/tag/get' => ['GET', 'TagController', 'getTags']
         ];
 
         if (isset($routes[$requestUri])) {
