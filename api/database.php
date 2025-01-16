@@ -39,4 +39,3 @@ class Database
         }
     }
 }
-$db = (new Database())->connect();
