@@ -91,4 +91,10 @@ class Course {
     public function setStudents(array $students): void {
         $this->students = $students;
     }
+    public static function getCoursee(PDO $dbConnection, int $cid): array {
+        $query = "SELECT * FROM Courses where id = :cid";
+        $stmt = $dbConnection->prepare($query);
+        $stmt->execute([':cid' => $cid]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

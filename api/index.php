@@ -12,6 +12,7 @@ require_once 'controllers/UserController.php';
 require_once 'controllers/CategoryController.php';
 require_once 'controllers/TagController.php';
 require_once 'controllers/StudentController.php';
+require_once 'controllers/TeacherController.php';
 require_once 'routes/Router.php';
 
 $database = new Database();
