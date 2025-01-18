@@ -14,19 +14,31 @@ class Router {
 
         // Define routes
         $routes = [
+            // user routes
             'api/user/login' => ['POST', 'UserController', 'login'],
             'api/user/register' => ['POST', 'UserController', 'register'],
             'api/user/logout' => ['POST', 'UserController', 'logout'],
             'api/user/courses' => ['GET', 'UserController', 'viewCourses'],
             'api/user/search' => ['GET', 'UserController', 'searchCourses'],
+            // Category Tag routes
             'api/category/list' => ['GET', 'CategoryController', 'getCategories'],
             'api/tag/get' => ['GET', 'TagController', 'getTags'],
+            // student routes
             'api/student/details' => ['GET', 'StudentController', 'getStudentDetails'],
             'api/student/enroll' => ['POST', 'StudentController', 'enrollCourse'],
+            // teacher routes
             'api/teacher/courses' => ['GET', 'TeacherController', 'getCreatedCourses'],
             'api/teacher/course/add' => ['POST', 'TeacherController', 'addCourse'],
             'api/teacher/course/edit' => ['POST', 'TeacherController', 'editCourse'],
-            'api/teacher/course/delete' => ['POST', 'TeacherController', 'deleteCourse']
+            'api/teacher/course/delete' => ['POST', 'TeacherController', 'deleteCourse'],
+            // addmin routes
+            'api/admin/teacher/update' => ['POST', 'AdministratorController', 'updateTeacherStatus'],
+            'api/admin/user/delete' => ['POST', 'AdministratorController', 'deleteUser'],
+            'api/admin/statistics' => ['GET', 'AdministratorController', 'viewGlobalStatistics'],
+
+            'api/admin/tag/manage' => ['POST', 'AdministratorController', 'manageTags'],
+            'api/admin/category/manage' => ['POST', 'AdministratorController', 'manageCategories']
+
         ];
 
         if (isset($routes[$requestUri])) {
