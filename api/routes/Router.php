@@ -37,7 +37,10 @@ class Router {
             'api/admin/statistics' => ['GET', 'AdministratorController', 'viewGlobalStatistics'],
 
             'api/admin/tag/manage' => ['POST', 'AdministratorController', 'manageTags'],
-            'api/admin/category/manage' => ['POST', 'AdministratorController', 'manageCategories']
+            'api/admin/category/manage' => ['POST', 'AdministratorController', 'manageCategories'],
+            'api/admin/courses/delete' => ['POST', 'AdministratorController', 'deleteCourse'],
+            'api/admin/courses/tags' => ['POST', 'AdministratorController', 'bulkInsertTags']
+
 
         ];
 

@@ -99,5 +99,24 @@ class Administrator extends User {
         $stmt = $this->db->query($query);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Bulk insert tags for a course
+    public function bulkInsertTags(int $courseId, array $tagIds): bool {
+        $query = "INSERT IGNORE INTO Courses_Tags (course_id, tag_id) VALUES (:courseId, :tagId)";
+        $stmt = $this->db->prepare($query);
+
+        foreach ($tagIds as $tagId) {
+            $stmt->execute([':courseId' => $courseId, ':tagId' => $tagId]);
+        }
+
+        return true;
+    }
+
+    // Delete a course
+    public function deleteCourse(int $courseId): bool {
+        $query = "DELETE FROM Courses WHERE id = :courseId";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([':courseId' => $courseId]);
+    }
 }
 ?>

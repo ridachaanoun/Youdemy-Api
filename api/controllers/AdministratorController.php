@@ -146,5 +146,49 @@ class AdministratorController {
 
         return $user;
     }
+
+    // Bulk insert tags for a course
+    public function bulkInsertTags() {
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        if (!isset($data['courseId']) || !isset($data['tagIds']) || !is_array($data['tagIds'])) {
+            http_response_code(400);
+            echo json_encode(["message" => "Invalid request data."]);
+            return;
+        }
+
+        try {
+            $user = $this->authenticate();
+            $admin = new Administrator($this->db, $user['id']);
+
+            $success = $admin->bulkInsertTags($data['courseId'], $data['tagIds']);
+            echo json_encode(["message" => $success ? "Tags added successfully." : "Failed to add tags."]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["message" => $e->getMessage()]);
+        }
+    }
+
+    // Delete a course
+    public function deleteCourse() {
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        if (!isset($data['courseId'])) {
+            http_response_code(400);
+            echo json_encode(["message" => "Course ID is required."]);
+            return;
+        }
+
+        try {
+            $user = $this->authenticate();
+            $admin = new Administrator($this->db, $user['id']);
+
+            $success = $admin->deleteCourse($data['courseId']);
+            echo json_encode(["message" => $success ? "Course deleted successfully." : "Failed to delete course."]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["message" => $e->getMessage()]);
+        }
+    }
 }
 ?>
