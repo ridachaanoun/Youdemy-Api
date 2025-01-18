@@ -1,0 +1,7 @@
+/vendor/
+.env
+.vscode
+test.php
+api/uploads/
+api/vendor/
+node_modules/
