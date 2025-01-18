@@ -149,5 +149,18 @@ class TeacherController {
 
         return $user;
     }
+
+    public function getStatistics() {
+        try {
+            $user = $this->authenticate(); // authenticate the teacher
+            $teacher = new Teacher($this->db, $user['id']);
+            $statistics = $teacher->getStatistics($this->db);
+            http_response_code(200);
+            echo json_encode($statistics);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["message" => $e->getMessage()]);
+        }
+    }
 }
 

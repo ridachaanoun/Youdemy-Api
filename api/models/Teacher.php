@@ -226,4 +226,25 @@ class Teacher extends User {
         return $deleteStmt->execute([':courseId' => $courseId]);
     }
 
+    public function getStatistics(PDO $dbConnection): array {
+        // Get the number of created courses by the teacher
+        $courseQuery = "SELECT COUNT(*) AS total_courses FROM Courses WHERE teacher_id = :teacherId";
+        $stmt = $dbConnection->prepare($courseQuery);
+        $stmt->execute([':teacherId' => $this->id]);
+        $coursesCount = $stmt->fetch(PDO::FETCH_ASSOC)['total_courses'];
+
+        // Get the number of students enrolled in the teacher's courses
+        $studentsQuery = "SELECT COUNT(DISTINCT student_id) AS total_students
+                          FROM Students_Courses
+                          WHERE course_id IN (SELECT id FROM Courses WHERE teacher_id = :teacherId)";
+        $stmt = $dbConnection->prepare($studentsQuery);
+        $stmt->execute([':teacherId' => $this->id]);
+        $studentsCount = $stmt->fetch(PDO::FETCH_ASSOC)['total_students'];
+
+        return [
+            'total_courses' => $coursesCount,
+            'total_students' => $studentsCount
+        ];
+    }
+
 }
