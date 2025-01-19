@@ -113,5 +113,31 @@ class UserController {
         }
     }
 
-    
+    private function authenticate() {
+        $headers = getallheaders();
+        if (!isset($headers['Authorization'])) {
+            http_response_code(401);
+            echo json_encode(["message" => "Unauthorized"]);
+            exit;
+        }
+
+        $apiKey = $headers['Authorization'];
+        $query = "SELECT * FROM Users WHERE api_key = :apiKey";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':apiKey' => $apiKey]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            http_response_code(403);
+            echo json_encode(["message" => "Invalid API Key"]);
+            exit;
+        }
+
+        return $user;
+    }
+    public function getRoles():void{
+        $User = $this->authenticate();
+        http_response_code(200);
+        echo json_encode(["Role"=>$User["role"]]);
+    }
 }

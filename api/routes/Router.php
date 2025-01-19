@@ -20,6 +20,7 @@ class Router {
             'api/user/logout' => ['POST', 'UserController', 'logout'],
             'api/user/courses' => ['GET', 'UserController', 'viewCourses'],
             'api/user/search' => ['GET', 'UserController', 'searchCourses'],
+            'api/user/role' => ['GET', 'UserController', 'getRoles'],
             // Category Tag routes
             'api/category/list' => ['GET', 'CategoryController', 'getCategories'],
             'api/tag/get' => ['GET', 'TagController', 'getTags'],
