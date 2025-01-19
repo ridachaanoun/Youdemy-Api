@@ -7,6 +7,9 @@
           <li><router-link to="/" class="hover:underline">Home</router-link></li>
           <li><router-link to="/courses" class="hover:underline">Courses</router-link></li>
           <li v-if="!isLoggedIn"><router-link to="/login" class="hover:underline">Login</router-link></li>
+          <li v-if="isLoggedIn && isStudent">
+            <router-link to="/student/dashboard" class="hover:underline">Student Dashboard</router-link>
+          </li>
         </ul>
       </div>
     </nav>
@@ -18,25 +21,44 @@
 </template>
 
 <script>
+import api from "@/api"; // Import the api instance
+
 export default {
   name: "App",
-
   data() {
     return {
-      isLoggedIn: false, // Default false
+      isLoggedIn: false,
+      isStudent: false, // Track if the user is a student
     };
   },
   mounted() {
     this.checkLoginStatus();
   },
   methods: {
-    // Method to check if api_key exist in cookie
+    // Method to check if api_key exists in cookie
     checkLoginStatus() {
       const cookies = document.cookie.split(';');
       const apiKey = cookies.find(cookie => cookie.trim().startsWith('api_key='));
       this.isLoggedIn = !!apiKey; // If api_key exists => true
+
+      // If logged in, fetch user role
+      if (this.isLoggedIn) {
+        this.checkUserRole();
+      }
     },
-  },
+
+    async checkUserRole() {
+      try {
+        const response = await api.get('/user/role');
+        const userRole = response.data.Role;
+
+        this.isStudent = userRole === 'Student';
+        
+      } catch (error) {
+        console.error('Error fetching user role:', error);
+      }
+    }
+  }
 };
 </script>
 

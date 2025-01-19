@@ -22,7 +22,7 @@ class StudentController {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user) {
-            http_response_code(403);
+            http_response_code(405);
             echo json_encode(["message" => "Invalid API Key"]);
             exit;
         }
@@ -75,7 +75,8 @@ class StudentController {
             }
 
             $id = $user['id'];
-            $courseId = $_POST['course_id'] ?? null;
+            $data = json_decode(file_get_contents('php://input'), true);
+            $courseId = $data['course_id'] ?? null; 
 
             if ($id === null || $courseId === null) {
                 throw new Exception("Student ID and Course ID are required.");
