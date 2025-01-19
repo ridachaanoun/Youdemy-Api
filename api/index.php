@@ -17,6 +17,7 @@ require_once 'controllers/TagController.php';
 require_once 'controllers/StudentController.php';
 require_once 'controllers/TeacherController.php';
 require_once 'controllers/AdministratorController.php';
+require_once 'controllers/CorsesController.php';
 require_once 'routes/Router.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
