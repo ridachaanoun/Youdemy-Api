@@ -2,8 +2,8 @@
     <div class="p-6">
       <h2 class="text-3xl font-bold text-gray-800 mb-6">Student Dashboard</h2>
   
-      <!-- Search Bar -->
-      <div class="mb-4">
+            <!-- Search Bar -->
+            <div class="mb-4">
         <input
           type="text"
           v-model="searchQuery"
@@ -12,7 +12,8 @@
           class="border p-2 w-full rounded"
         />
       </div>
-  
+
+      <!-- My Courses Section -->
       <h3 class="text-2xl font-semibold mb-4">My Courses</h3>
       <div v-if="loading" class="text-center text-gray-500">Loading...</div>
       <div v-if="error" class="text-red-500">{{ error }}</div>
@@ -21,6 +22,7 @@
         <div v-for="course in enrolledCourses" :key="course.id" class="bg-white p-4 shadow rounded">
           <h3 class="text-xl font-semibold">{{ course.title }}</h3>
           <p class="text-gray-600 truncate">{{ course.description }}</p>
+          <router-link :to="'/course/' + course.id" class="text-blue-500 mt-2">View Details</router-link>
         </div>
       </div>
   
@@ -28,6 +30,7 @@
         You are not enrolled in any courses.
       </div>
   
+      <!-- Available Courses Section -->
       <h3 class="text-2xl font-semibold mt-8 mb-4">Available Courses</h3>
       <div v-if="searchQuery && searchResults.length === 0" class="text-gray-500">No courses found.</div>
   
@@ -48,6 +51,7 @@
       </div>
     </div>
   </template>
+  
   
   <script>
   import api from "@/api";
