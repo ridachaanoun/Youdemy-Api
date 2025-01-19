@@ -27,11 +27,13 @@ class Teacher extends User {
     }
 
     public function loadCreatedCourses(PDO $dbConnection): void {
-        $query = "SELECT c.id, c.title, c.description, c.content, c.teacher_id, 
-                         c.category_id, cat.name AS category_name 
-                  FROM Courses c
-                  LEFT JOIN Categories cat ON c.category_id = cat.id
-                  WHERE c.teacher_id = :teacherId";
+        $query = "SELECT c.id, c.title, c.description, c.content, c.teacher_id, count(s.course_id) AS studen_count,
+                    c.category_id, cat.name AS category_name 
+                    FROM courses c
+                    LEFT JOIN categories cat ON c.category_id = cat.id
+                    left join students_courses s on s.course_id = c.id
+                    WHERE c.teacher_id = :teacherId
+                    GROUP BY c.id";
         $stmt = $dbConnection->prepare($query);
         $stmt->execute([':teacherId' => $this->id]);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -62,15 +64,17 @@ class Teacher extends User {
                 $courseData['content'],
                 $tags,
                 $category,
-                $this->id
+                $this->id,
+                $courseData["studen_count"]
             );
 
-            $this->createdCourses[] = $course;
+            $this->createdCourses[] = $course->toArray();
         }
     }
 
     // Getter and Setter for Created Courses
     public function getCreatedCourses(): array {
+        
         return $this->createdCourses;
     }
 

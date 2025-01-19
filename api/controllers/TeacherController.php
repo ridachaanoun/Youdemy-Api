@@ -15,7 +15,7 @@ class TeacherController {
             $teacher = new Teacher($this->db, $user['id']);
             $courses = $teacher->getCreatedCourses();
             http_response_code(200);
-            echo json_encode($courses);
+            echo json_encode($courses,);
         } catch (Exception $e) {
             http_response_code(500);
             echo json_encode(["message" => $e->getMessage()]);
