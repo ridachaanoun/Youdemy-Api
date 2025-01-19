@@ -4,6 +4,7 @@ import Login from '../views/Login-page.vue';
 import Register from '../views/register-page.vue';
 import StudentDashboard from '../views/Student-Dashboard.vue';
 import CourseDetails from '../components/Course-Details.vue';
+import TeacherDashboard from '../views/Teacher-Dashboard.vue';
 
 const routes = [
     { path: "/", component: Courses }, // Show courses on the home page
@@ -12,6 +13,7 @@ const routes = [
     { path: '/register', name: 'Register', component: Register },
     { path: '/student/dashboard', name: 'StudentDashboard', component: StudentDashboard, meta: { requiresAuth: true , requiresRole: ['Student'] },},
     { path: '/course/:id', name: 'CourseDetails', component: CourseDetails, meta: { requiresAuth: true, requiresEnrollment: true } },
+    { path: "/teacher/dashboard", name: "TeacherDashboard", component: TeacherDashboard, meta: { requiresAuth: true, requiresRole: ['Teacher'] } },
   ];
   
   const router = createRouter({

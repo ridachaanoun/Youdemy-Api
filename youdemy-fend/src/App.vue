@@ -10,6 +10,9 @@
           <li v-if="isLoggedIn && isStudent">
             <router-link to="/student/dashboard" class="hover:underline">Student Dashboard</router-link>
           </li>
+          <li v-if="isLoggedIn && isTeacher">
+            <router-link to="/teacher/dashboard" class="hover:underline">teacher Dashboard</router-link>
+          </li>
         </ul>
       </div>
     </nav>
@@ -29,6 +32,7 @@ export default {
     return {
       isLoggedIn: false,
       isStudent: false, // Track if the user is a student
+      isTeacher:false,
     };
   },
   mounted() {
@@ -53,6 +57,7 @@ export default {
         const userRole = response.data.Role;
 
         this.isStudent = userRole === 'Student';
+        this.isTeacher = userRole === 'Teacher';
         
       } catch (error) {
         console.error('Error fetching user role:', error);
