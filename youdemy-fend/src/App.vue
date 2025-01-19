@@ -6,7 +6,7 @@
         <ul class="flex space-x-4">
           <li><router-link to="/" class="hover:underline">Home</router-link></li>
           <li><router-link to="/courses" class="hover:underline">Courses</router-link></li>
-          <li><router-link to="/about" class="hover:underline">About</router-link></li>
+          <li v-if="!isLoggedIn"><router-link to="/login" class="hover:underline">Login</router-link></li>
         </ul>
       </div>
     </nav>
@@ -20,6 +20,23 @@
 <script>
 export default {
   name: "App",
+
+  data() {
+    return {
+      isLoggedIn: false, // Default false
+    };
+  },
+  mounted() {
+    this.checkLoginStatus();
+  },
+  methods: {
+    // Method to check if api_key exist in cookie
+    checkLoginStatus() {
+      const cookies = document.cookie.split(';');
+      const apiKey = cookies.find(cookie => cookie.trim().startsWith('api_key='));
+      this.isLoggedIn = !!apiKey; // If api_key exists => true
+    },
+  },
 };
 </script>
 
