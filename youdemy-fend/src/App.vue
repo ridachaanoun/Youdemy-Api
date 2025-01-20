@@ -28,6 +28,9 @@
           <li v-if="isLoggedIn && isAdmin">
             <router-link to="/Admin/StudentManagemen" class="hover:underline">Students</router-link>
           </li>
+          <li v-if="isLoggedIn && isAdmin">
+            <router-link to="/Admin/TeacherManagemen" class="hover:underline">Teacher</router-link>
+          </li>
         </ul>
       </div>
     </nav>
