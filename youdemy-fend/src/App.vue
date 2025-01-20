@@ -16,6 +16,9 @@
           <li v-if="isLoggedIn && isAdmin">
             <router-link to="/Admin/TagManagement" class="hover:underline">Tag Management</router-link>
           </li>
+          <li v-if="isLoggedIn && isAdmin">
+            <router-link to="/Admin/CategoryManagement" class="hover:underline">Category Management</router-link>
+          </li>
         </ul>
       </div>
     </nav>
