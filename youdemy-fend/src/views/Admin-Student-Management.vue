@@ -16,6 +16,7 @@
                 <th class="border p-2 text-left">Name</th>
                 <th class="border p-2 text-left">Email</th>
                 <th class="border p-2 text-left">Status</th>
+                <th class="border p-2 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -24,6 +25,13 @@
                 <td class="border p-2">{{ student.name }}</td>
                 <td class="border p-2">{{ student.email }}</td>
                 <td class="border p-2">{{ student.status }}</td>
+                <td class="border p-2">
+                  <button 
+                    @click="deleteUser(student.id)" 
+                    class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                    Delete
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -56,6 +64,16 @@
           this.error = "Failed to fetch students.";
         } finally {
           this.loading = false;
+        }
+      },
+      async deleteUser(userId) {
+        if (!confirm("Are you sure you want to delete this student?")) return;
+  
+        try {
+          await api.post("/admin/user/delete", { userId });
+          this.students = this.students.filter(student => student.id !== userId);
+        } catch (err) {
+          alert("Failed to delete user.");
         }
       },
     },
