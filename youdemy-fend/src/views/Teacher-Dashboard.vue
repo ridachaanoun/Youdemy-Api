@@ -1,11 +1,16 @@
 <template>
     <div class="p-6">
-      <h1 class="text-2xl font-bold mb-4">Teacher Dashboard</h1>
-  
+        <div class="flex justify-between items-center mb-6" >
+            <h1 class="text-2xl font-bold ">Teacher Dashboard</h1>
+              <!-- Add Course Button -->
+            <button @click="openModal" class=" px-4 py-2 bg-blue-500 text-white rounded-lg">Add New Course</button>
+        </div>
+
       <!-- Loading or error state -->
       <div v-if="loading" class="text-center">Loading...</div>
       <div v-else-if="error" class="text-red-500">{{ error }}</div>
-  
+        
+      
       <!-- Displaying the list of courses -->
       <div v-else>
         <div v-if="courses.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -21,14 +26,12 @@
             </div>
             <div class="mt-4 flex gap-2">
               <button @click="openEditModal(course)" class="px-3 py-1 bg-yellow-500 text-white rounded-lg">Edit</button>
+              <button @click="deleteCourse(course.id)" class="px-3 py-1 bg-red-500 text-white rounded-lg">Delete</button>
             </div>
           </div>
         </div>
         <p v-else class="text-gray-500">No courses found.</p>
       </div>
-  
-      <!-- Add Course Button -->
-      <button @click="openModal" class="mt-6 px-4 py-2 bg-blue-500 text-white rounded-lg">Add New Course</button>
   
       <!-- Modal to add/edit a course -->
       <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50" @click.self="closeModal">
@@ -182,6 +185,18 @@
           console.error("Error submitting course", err);
         }
       },
+      async deleteCourse(courseId) {
+      if (!confirm("Are you sure you want to delete this course?")) return;
+
+      try {
+        await api.post("/teacher/course/delete", { courseId });
+        this.courses = this.courses.filter(course => course.id !== courseId);
+        alert("Course deleted successfully!");
+      } catch (err) {
+        console.error("Error deleting course", err);
+        alert("Failed to delete course.");
+      }
+    },
     },
   };
   </script>
