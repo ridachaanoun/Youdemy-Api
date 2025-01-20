@@ -9,6 +9,7 @@ import AdminTagManagement from '../views/Admin-Tag-Management.vue';
 import AdminCategoryManagement from '../views/Admin-Category-Management.vue';
 import AdminCourseManagement from '../views/Admin-Course-Management.vue';
 import AdminStatistics from '../views/AdminStatistics.vue';
+import AdminStudentManagement from '../views/Admin-Student-Management.vue';
 
 const routes = [
     { path: "/", component: Courses }, // Show courses on the home page
@@ -22,6 +23,7 @@ const routes = [
     { path: "/Admin/CategoryManagement", name: "CategoryManagement", component: AdminCategoryManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
     { path: "/Admin/CourseManagement", name: "CourseManagement", component: AdminCourseManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
     { path: "/Admin/Statistics", name: "Statistics", component: AdminStatistics, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
+    { path: "/Admin/StudentManagemen", name: "StudentManagemen", component: AdminStudentManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
   ];
   
   const router = createRouter({
