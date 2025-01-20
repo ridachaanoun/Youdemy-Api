@@ -41,7 +41,9 @@ const routes = [
       if (to.meta.requiresAuth && !apiKey) {
           return next('/login'); 
       }
-  
+      if (!apiKey) {
+        return next();
+     }
       try {
           // Fetch the user role
           const response = await api.get('/user/role');
