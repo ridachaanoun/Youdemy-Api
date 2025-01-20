@@ -20,6 +20,15 @@
         <div v-for="course in courses" :key="course.id" class="bg-white p-4 shadow rounded">
           <h3 class="text-xl font-semibold">{{ course.title }}</h3>
           <p class="text-gray-600 truncate h-15">{{ course.description }}</p>
+          
+          <!-- Button to add tags to course -->
+          <button 
+            @click="showTagModal(course.id)" 
+            class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Add Tags
+          </button>
+  
           <button 
             @click="deleteCourse(course.id)" 
             class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
@@ -53,6 +62,41 @@
           Next
         </button>
       </div>
+  
+      <!-- Add Tags Modal -->
+      <div v-if="isTagModalVisible" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+        <div class="bg-white p-6 rounded shadow-lg w-1/2">
+          <h3 class="text-xl font-semibold mb-4">Assign Tags to Course</h3>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-2">Select Tags</label>
+            <div class="space-y-2">
+              <div v-for="tag in tags" :key="tag.id" class="flex items-center">
+                <input 
+                  type="checkbox" 
+                  :value="tag.id" 
+                  v-model="selectedTagIds" 
+                  class="mr-2"
+                />
+                <label>{{ tag.name }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button 
+              @click="closeTagModal"
+              class="px-4 py-2 bg-gray-300 text-white rounded"
+            >
+              Cancel
+            </button>
+            <button 
+              @click="assignTagsToCourse"
+              class="px-4 py-2 bg-blue-500 text-white rounded"
+            >
+              Assign Tags
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </template>
   
@@ -64,16 +108,21 @@
     data() {
       return {
         courses: [],
+        tags: [], 
+        selectedTagIds: [],  
         loading: false,
         error: null,
         limit: 15,
         offset: 0,
         page: 1,
-        searchQuery: "", // Store search keyword
+        searchQuery: "", 
+        isTagModalVisible: false,  
+        courseIdToAssignTags: null,  
       };
     },
     mounted() {
       this.fetchCourses();
+      this.fetchTags();  // Fetch tags when the component is mounted
     },
     methods: {
       async fetchCourses() {
@@ -88,9 +137,16 @@
           this.loading = false;
         }
       },
+      async fetchTags() {
+        try {
+          const response = await api.get("tag/get");  // Adjust this URL if needed
+          this.tags = response.data;
+        } catch (err) {
+          console.error("Failed to load tags:", err);
+        }
+      },
       async handleSearch() {
         if (!this.searchQuery) {
-          // If search is empty, reload paginated courses
           this.fetchCourses();
           return;
         }
@@ -107,7 +163,7 @@
         }
       },
       nextPage() {
-        if (this.searchQuery) return; // Disable pagination when searching
+        if (this.searchQuery) return;
         this.offset += this.limit;
         this.page += 1;
         this.fetchCourses();
@@ -129,6 +185,31 @@
           alert("Course deleted successfully!");
         } catch (err) {
           alert("Failed to delete course.");
+        }
+      },
+      showTagModal(courseId) {
+        this.courseIdToAssignTags = courseId;
+        this.isTagModalVisible = true;
+      },
+      closeTagModal() {
+        this.isTagModalVisible = false;
+        this.selectedTagIds = [];
+      },
+      async assignTagsToCourse() {
+        if (!this.selectedTagIds.length) {
+          alert("Please select at least one tag.");
+          return;
+        }
+  
+        try {
+          await api.post("/admin/courses/tags", {
+            courseId: this.courseIdToAssignTags,
+            tagIds: this.selectedTagIds,
+          });
+          alert("Tags assigned successfully!");
+          this.closeTagModal();
+        } catch (err) {
+          alert("Failed to assign tags.");
         }
       },
     },
