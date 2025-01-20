@@ -250,5 +250,10 @@ class Teacher extends User {
             'total_students' => $studentsCount
         ];
     }
+    public static function getAll(pdo $db): array{
+        $stmt = $db->prepare("select * from users where role = 'Teacher'");
+        $user =$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $user ;
+    }
 
 }

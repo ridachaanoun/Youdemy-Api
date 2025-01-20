@@ -1,6 +1,6 @@
 <?php
 
-class User {
+abstract class User {
     protected int $id;
     protected string $name;
     protected string $email;
@@ -119,4 +119,7 @@ class User {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user;
     }
+    public static abstract function getall(pdo $db): array ;
+
+    
 }

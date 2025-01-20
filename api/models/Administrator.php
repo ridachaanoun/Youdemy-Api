@@ -118,5 +118,11 @@ class Administrator extends User {
         $stmt = $this->db->prepare($query);
         return $stmt->execute([':courseId' => $courseId]);
     }
+    public static function getAll(pdo $db): array{
+        $stmt = $db->prepare("select * from users where role = 'Admin'");
+        $user =$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $user ;
+
+    }
 }
 ?>

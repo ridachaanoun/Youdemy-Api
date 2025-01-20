@@ -27,6 +27,7 @@ class Router {
             // student routes
             'api/student/details' => ['GET', 'StudentController', 'getStudentDetails'],
             'api/student/enroll' => ['POST', 'StudentController', 'enrollCourse'],
+            'api/student/getAll' => ['GET', 'StudentController', 'getAllStudent'],
             // teacher routes
             'api/teacher/courses' => ['GET', 'TeacherController', 'getCreatedCourses'],
             'api/teacher/course/add' => ['POST', 'TeacherController', 'addCourse'],

@@ -135,4 +135,10 @@
             throw new Exception("Error enrolling in course: " . $e->getMessage());
         }
     }
+    public static function getAll(pdo $db): array{
+        $stmt = $db->prepare("select * from users where role = 'Student'");
+        $stmt->execute();
+        $user =$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $user ;
+    }
 }
