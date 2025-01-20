@@ -160,5 +160,20 @@ class TeacherController {
             echo json_encode(["message" => $e->getMessage()]);
         }
     }
+    public function getAllStudent(){
+        try {
+
+            $users = Teacher::getAll($this->db);
+            if (isset($users)){
+                http_response_code(200);
+                echo json_encode($users);
+            }
+            
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["message" => "Error: " . $e->getMessage()]);
+        }
+
+    }
 }
 
