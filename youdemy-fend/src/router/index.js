@@ -51,9 +51,14 @@ const routes = [
           const userStatus = response.data.Status;         
   
           // Restrict routes based on roles
-          if (to.meta.requiresRole && !(to.meta.requiresRole.includes(userRole) && to.meta.requiresRole.includes(userStatus))) {
-              return next('/'); 
-          }
+          if (to.meta.requiresRole) {
+            const requiredRoles = to.meta.requiresRole;
+            
+            // Check if the user has the required role and the required status
+            if (!requiredRoles.includes(userRole) || (userRole === 'Teacher' && userStatus !== 'active')) {
+                return next('/'); // Redirect to home if the condition is not met
+            }
+        }
 
           // Check if student is enrolled in the requested course
           if (to.meta.requiresEnrollment && userRole === 'Student') {
