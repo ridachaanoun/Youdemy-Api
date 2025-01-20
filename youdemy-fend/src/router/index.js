@@ -11,6 +11,7 @@ import AdminCourseManagement from '../views/Admin-Course-Management.vue';
 import AdminStatistics from '../views/AdminStatistics.vue';
 import AdminStudentManagement from '../views/Admin-Student-Management.vue';
 import AdminTeacherManagement from '../views/Admin-Teacher-Managemen.vue';
+import TeacherStatistics from '../views/Teacher-Statistics.vue';
 
 const routes = [
     { path: "/", component: Courses }, // Show courses on the home page
@@ -26,6 +27,8 @@ const routes = [
     { path: "/Admin/Statistics", name: "Statistics", component: AdminStatistics, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
     { path: "/Admin/StudentManagemen", name: "StudentManagemen", component: AdminStudentManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
     { path: "/Admin/TeacherManagemen", name: "TeacherManagemen", component: AdminTeacherManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
+    { path: "/teacher/Statistics", name: "TeacherStatistics", component: TeacherStatistics, meta: { requiresAuth: true, requiresRole: ['Teacher',"active"] } },
+
   ];
   
   const router = createRouter({

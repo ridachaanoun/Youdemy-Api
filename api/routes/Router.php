@@ -33,7 +33,7 @@ class Router {
             'api/teacher/course/add' => ['POST', 'TeacherController', 'addCourse'],
             'api/teacher/course/edit' => ['POST', 'TeacherController', 'editCourse'],
             'api/teacher/course/delete' => ['POST', 'TeacherController', 'deleteCourse'],
-            'api/teacher/statistics' => ['POST', 'TeacherController', 'getStatistics'],
+            'api/teacher/statistics' => ['GET', 'TeacherController', 'getStatistics'],
             'api/teacher/getAll' => ['GET', 'TeacherController', 'getAllStudent'],
             // addmin routes
             'api/admin/teacher/update' => ['POST', 'AdministratorController', 'updateTeacherStatus'],
