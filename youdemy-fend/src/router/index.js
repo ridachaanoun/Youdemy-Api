@@ -7,6 +7,7 @@ import CourseDetails from '../components/Course-Details.vue';
 import TeacherDashboard from '../views/Teacher-Dashboard.vue';
 import AdminTagManagement from '../views/Admin-Tag-Management.vue';
 import AdminCategoryManagement from '../views/Admin-Category-Management.vue';
+import AdminCourseManagement from '../views/Admin-Course-Management.vue';
 
 const routes = [
     { path: "/", component: Courses }, // Show courses on the home page
@@ -18,6 +19,7 @@ const routes = [
     { path: "/teacher/dashboard", name: "TeacherDashboard", component: TeacherDashboard, meta: { requiresAuth: true, requiresRole: ['Teacher'] } },
     { path: "/Admin/TagManagement", name: "TagManagement", component: AdminTagManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
     { path: "/Admin/CategoryManagement", name: "CategoryManagement", component: AdminCategoryManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
+    { path: "/Admin/CourseManagement", name: "CourseManagement", component: AdminCourseManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
   ];
   
   const router = createRouter({
