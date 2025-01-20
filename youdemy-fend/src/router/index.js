@@ -19,7 +19,7 @@ const routes = [
     { path: '/register', name: 'Register', component: Register },
     { path: '/student/dashboard', name: 'StudentDashboard', component: StudentDashboard, meta: { requiresAuth: true , requiresRole: ['Student'] },},
     { path: '/course/:id', name: 'CourseDetails', component: CourseDetails, meta: { requiresAuth: true, requiresEnrollment: true } },
-    { path: "/teacher/dashboard", name: "TeacherDashboard", component: TeacherDashboard, meta: { requiresAuth: true, requiresRole: ['Teacher'] } },
+    { path: "/teacher/dashboard", name: "TeacherDashboard", component: TeacherDashboard, meta: { requiresAuth: true, requiresRole: ['Teacher',"active"] } },
     { path: "/Admin/TagManagement", name: "TagManagement", component: AdminTagManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
     { path: "/Admin/CategoryManagement", name: "CategoryManagement", component: AdminCategoryManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
     { path: "/Admin/CourseManagement", name: "CourseManagement", component: AdminCourseManagement, meta: { requiresAuth: true, requiresRole: ['Admin'] } },
@@ -48,12 +48,13 @@ const routes = [
           // Fetch the user role
           const response = await api.get('/user/role');
           const userRole = response.data.Role;
+          const userStatus = response.data.Status;         
   
           // Restrict routes based on roles
-          if (to.meta.requiresRole && !to.meta.requiresRole.includes(userRole)) {
+          if (to.meta.requiresRole && !(to.meta.requiresRole.includes(userRole) && to.meta.requiresRole.includes(userStatus))) {
               return next('/'); 
           }
-  
+
           // Check if student is enrolled in the requested course
           if (to.meta.requiresEnrollment && userRole === 'Student') {
               const studentResponse = await api.get('/student/details');

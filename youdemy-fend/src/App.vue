@@ -11,7 +11,7 @@
             <router-link to="/student/dashboard" class="hover:underline">Student Dashboard</router-link>
           </li>
           <li v-if="isLoggedIn && isTeacher">
-            <router-link to="/teacher/dashboard" class="hover:underline">teacher Dashboard</router-link>
+            <router-link to="/teacher/dashboard" class="hover:underline" :class="isActive?'text-green-500':'text-red-500'">Teacher Dashboard</router-link>
           </li>
           <li v-if="isLoggedIn && isAdmin">
             <router-link to="/Admin/TagManagement" class="hover:underline">Tag Management</router-link>
@@ -52,6 +52,7 @@ export default {
       isStudent: false, // Track if the user is a student
       isTeacher:false,
       isAdmin:false,
+      isActive:false,
     };
   },
   mounted() {
@@ -74,10 +75,12 @@ export default {
       try {
         const response = await api.get('/user/role');
         const userRole = response.data.Role;
+        const userStatus = response.data.Status;
         
         this.isStudent = userRole === 'Student';
         this.isTeacher = userRole === 'Teacher';
         this.isAdmin = userRole === 'Admin';
+        this.isActive = userStatus === "active"
         
       } catch (error) {
         console.error('Error fetching user role:', error);

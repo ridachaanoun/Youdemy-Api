@@ -138,6 +138,6 @@ class UserController {
     public function getRoles():void{
         $User = $this->authenticate();
         http_response_code(200);
-        echo json_encode(["Role"=>$User["role"]]);
+        echo json_encode(["Role"=>$User["role"],"Status"=>$User["status"]]);
     }
 }
