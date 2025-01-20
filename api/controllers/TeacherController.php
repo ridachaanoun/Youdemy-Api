@@ -139,7 +139,7 @@ class TeacherController {
         $stmt->execute([':apiKey' => $apiKey]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$user || $user['role'] !== 'Teacher') {
+        if (!$user || $user['role'] !== 'Teacher' || $user["status"] === "suspended") {
             http_response_code(403);
             echo json_encode(["message" => "Invalid API Key or not authorized"]);
             exit;
