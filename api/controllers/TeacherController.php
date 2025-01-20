@@ -64,20 +64,18 @@ class TeacherController {
             $user = $this->authenticate();
             $teacher = new Teacher($this->db, $user['id']);
     
-            // Get data from the request
-            $data = json_decode(file_get_contents("php://input"), true);
     
             // Validate request data (all fields except video)
-            if (!$data || !isset($data['courseId']) || !isset($data['title']) || !isset($data['description']) || !isset($data['tags']) || !isset($data['categoryId'])) {
+            if (!isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['tags']) || !isset($_POST['categoryId'])) {
                 throw new Exception("Invalid or missing data. Please provide courseId, title, description, tags, and categoryId.");
             }
     
             // Extract data
-            $courseId = (int) $data['courseId'];
-            $title = trim($data['title']);
-            $description = trim($data['description']);
-            $tags = is_array($data['tags']) ? $data['tags'] : explode(',', $data['tags']); // Convert tags if needed
-            $categoryId = (int) $data['categoryId'];
+            $courseId = (int) $_POST['courseId'];
+            $title = trim($_POST['title']);
+            $description = trim($_POST['description']);
+            $tags = is_array($_POST['tags']) ? $_POST['tags'] : explode(',', $_POST['tags']); // Convert tags if needed
+            $categoryId = (int) $_POST['categoryId'];
             $videoFile = isset($_FILES['video']) ? $_FILES['video'] : null;
     
             // Ensure all fields are non-empty
