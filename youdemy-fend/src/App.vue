@@ -34,6 +34,9 @@
           <li v-if="isLoggedIn && isTeacher">
             <router-link to="/teacher/Statistics" class="hover:underline" :class="isActive?'text-green-500':'text-red-500'">Teacher Statistics</router-link>
           </li>
+          <li v-if="isLoggedIn">
+            <button @click="logout" class="bg-red-500 px-4 py-2 rounded hover:bg-red-600">Logout</button>
+          </li>
         </ul>
       </div>
     </nav>
@@ -88,6 +91,14 @@ export default {
       } catch (error) {
         console.error('Error fetching user role:', error);
       }
+    },
+    logout() {
+      document.cookie = "api_key=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      this.isLoggedIn = false;
+      this.isStudent = false;
+      this.isTeacher = false;
+      this.isAdmin = false;
+      this.$router.push("/login"); // Redirect to login page
     }
   }
 };

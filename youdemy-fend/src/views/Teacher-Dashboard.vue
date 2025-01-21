@@ -16,7 +16,7 @@
         <div v-if="courses.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div v-for="course in courses" :key="course.id" class="p-4 border rounded-lg shadow-md bg-white">
             <h2 class="text-xl font-semibold">{{ course.title }}</h2>
-            <p class="text-gray-600">{{ course.description }}</p>
+            <p class="text-gray-600 truncate">{{ course.description }}</p>
             <p class="text-sm text-gray-500">Category: {{ course.category.name }}</p>
             <p class="text-sm text-gray-500">Students Enrolled: {{ course.students }}</p>
             <div class="mt-2">
